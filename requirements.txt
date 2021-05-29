@@ -1,11 +1,18 @@
 # contains everything that can be needed for development
 
 numpy  # the only external package used for the demo
+
 pytest  # python testing
 pytest-cov  # test coverage check
+
 sphinx  # documentation generator
 snooty-lextudio  # rst server
 rstcheck  # rst linter
+
 autopep8  # autoformat
 pylint  # python linter
 pylama  # python linter group
+
+
+build  # create packages
+twine  # check packages

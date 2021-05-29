@@ -6,9 +6,10 @@
 Welcome to pip package demo's documentation!
 ============================================
 
-This is the sphinx source code of the documentation of the **pip package demo**.
-General introduction, installation and usage can be found in the root's ``README.md``
-which is also shown at the welcome page of the git repository.
+This is the sphinx source code of the documentation of the
+`pip package demo <https://test.pypi.org/project/pip-package-demo/>`_.
+General introduction, installation and usage can be found in the root's `README.md <https://github.com/danieltuzes/pip_package_demo/blob/master/README.md>`_
+which is also shown at the welcome page of the `git repository <https://github.com/danieltuzes/pip_package_demo>`_.
 
 This documentation is written in the language rst, using the IDE VS Code.
 Linters and previewers are used during the creation of this documentation. 

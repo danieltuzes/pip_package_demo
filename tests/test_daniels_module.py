@@ -4,7 +4,7 @@ Install the package, e.g. in editable mode to run the tests.
 """
 
 import numpy
-import daniels_module
+from daniels_package import daniels_module  # it is a namespace package
 
 
 def test_my_func():

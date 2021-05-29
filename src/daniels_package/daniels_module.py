@@ -6,7 +6,7 @@ Tests and documentation are available.
 import sys
 import numpy
 
-__version__ = "1"  # the version info for the package used by setup.cfg
+__version__ = "1.0.12"  # the version info for the package used by setup.cfg
 
 
 def my_func(my_text: str = "", my_arr: numpy.ndarray = None) -> int:
@@ -23,14 +23,15 @@ def my_func(my_text: str = "", my_arr: numpy.ndarray = None) -> int:
     -------
     int
         The sum of my_arr if set, 0 otherwise.
+
     """
     print(f"sys.argv = {sys.argv}")
     print(f"sys.path = {sys.path}")
     print(f"Function input = {my_text}")
     if my_arr is not None:
-        sum = numpy.sum(my_arr)
-        print(f"Sum: {sum}")
-        return sum
+        arr_sum = numpy.sum(my_arr)
+        print(f"Sum: {arr_sum}")
+        return arr_sum
 
     return 0
 

@@ -22,7 +22,7 @@ is used now.
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
-import daniels_module  # pylint: disable=unused-import
+from daniels_package import daniels_module  # pylint: disable=unused-import
 
 # -- Project information -----------------------------------------------------
 
@@ -31,7 +31,7 @@ copyright = '2021, Daniel Tuzes'  # pylint: disable=redefined-builtin
 author = 'Daniel Tuzes'
 
 # The full version, including alpha/beta/rc tags
-release = '1'
+release = "2"
 
 
 # -- General configuration ---------------------------------------------------
@@ -41,11 +41,9 @@ release = '1'
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
-    'sphinx.ext.coverage',
     'sphinx.ext.viewcode',
     'sphinx.ext.intersphinx',
-    'sphinx.ext.napoleon',
-    'sphinx.ext.ifconfig'
+    'sphinx.ext.napoleon'
 ]
 
 # Add any paths that contain templates here, relative to this directory.

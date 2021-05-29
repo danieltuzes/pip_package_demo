@@ -8,6 +8,7 @@ When release notes are maintained manually:
 1. sometimes it is part of the formatted documentation (like this document).
    Advantage: it is easier to access and read than repo md documentations.
    On `<http://pypi.org>`_, links to git repo and documentation are both possible.
+   Check out this package at the `test.pypi.org repo <https://test.pypi.org/project/pip-package-demo>`_!
 #. sometimes it is included in markdown files in the repository.
    Advantage: no need to compile into the formatted docs.
 

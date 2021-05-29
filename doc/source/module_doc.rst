@@ -6,5 +6,5 @@ The first docstring rendered is the docstring of the module.
 ``daniels_module``
 --------------------------------------
 
-.. automodule:: daniels_module
+.. automodule:: daniels_package.daniels_module
     :members:

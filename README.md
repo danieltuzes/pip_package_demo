@@ -5,10 +5,15 @@ documentation and packaging settings.
 
 - [pip package demo](#pip-package-demo)
   - [Files and folders](#files-and-folders)
+    - [Where's the `__init__.py`?](#wheres-the-__init__py)
   - [Installation](#installation)
     - [Install the package](#install-the-package)
     - [Dependencies](#dependencies)
-  - [Create the package](#create-the-package)
+    - [development](#development)
+  - [Distribute the package](#distribute-the-package)
+    - [Create the package distribution files](#create-the-package-distribution-files)
+    - [upload the package distribution files](#upload-the-package-distribution-files)
+    - [Create new versions](#create-new-versions)
   - [Run the test](#run-the-test)
     - [coverage](#coverage)
   - [Documentation](#documentation)
@@ -18,11 +23,16 @@ documentation and packaging settings.
 The following files and folders are contained within this repo:
 
 ```text
+pip_package_demo
+│
+│   LICENSE
 │   pyproject.toml
 │   README.md
 │   requirements.txt
 │   setup.cfg
 │ 
+├───dist
+│
 ├───doc
 │   │   make.bat
 │   │   Makefile
@@ -43,31 +53,37 @@ The following files and folders are contained within this repo:
 │   └───daniels_package
 │           daniels_module.py
 │
-└───test
+└───tests
         test_daniels_module.py
 ```
 
 | folder name        | description                                 | contained in the package |
 | ------------------ | ------------------------------------------- | ------------------------ |
+| `LICENSE`          | license according to your needs or rights   | no                       |
 | `pyproject.toml`   | information about the packaging tool        | no                       |
 | `README.md`        | for the repository welcome screen           | yes                      |
 | `requirements.txt` | dependencies for development                | no                       |
-| `setup.cfg`        | information about the package + settings *3 | no                       |
+| `setup.cfg`        | information about the package + settings *3 | yes                      |
 | `.git`             | for git source control                      | no                       |
-| `doc/` files       | created by sphinx to build docs             | no                       |
-| `doc/output`       | sphinx output products (e.g. html, pdf)*2   | no                       |
+| `dist/` *2         | package distribution files                  | no                       |
+| `doc/` files       | created by sphinx to build docs             | no *1                    |
+| `doc/output` *2    | sphinx output products (e.g. html, pdf)     | no                       |
 | `doc/source`       | additional sphinx source code in rst        | no                       |
-| `htmlcov`          | coverage report in html *2                  | no                       |
+| `htmlcov` *2       | coverage report in html                     | no                       |
 | `src`              | python source code of the package           | yes                      |
-| `test`             | is the container of the package tests.      | yes *1                   |
+| `tests`            | container of the package tests              | yes *1                   |
 
-*1: depends on the settings of `setup.cfg`
+*1: depends on the `package_data` and `data_files` settings of `setup.cfg`
 
 *2: doesn't contained in the repo,
-but will be created once documentation and pytest coverage is created.
+but will be created once documentation, pytest coverage is created.
 
 *3: it can contain linter (pylint, pylama), testing (pytest, unittest)
 and documentation (sphinx) settings.
+
+### Where's the `__init__.py`?
+
+There is none, because there was no need for that. Namespace package is used here.
 
 ## Installation
 
@@ -80,32 +96,107 @@ activate a new environment.
 
 You can install
 
-- from the source code, locally, for development. In the root,
-  issue `pip install -e .` This will place a link
-  to your python `site-packages` folder which will tell to look
-  for the library's content not directly in the `site-packages`,
-  but where you cloned the repo.
-- from a package distribution you already have locally.
-  This can happen if you download the package or somebody sent you as a file.
-  Useful if pip and python doesn't have internet access
-  due to firewall settings.
-- using pip directly.
-  The aim with this package is achieve this.
-  You won't find this package on [pypi.org](http://pypi.org),
-  but the package has been uploaded to test folders.
+1. **from the source code, locally, for development**. In the root,
+   issue `pip install -e .` This will place a link
+   to your python `site-packages` folder which will tell to look
+   for the library's content not directly in the `site-packages`,
+   but where you cloned the repo.
+2. **from a package distribution you already have locally**.
+   This can happen if you download the package distribution files, somebody sent you the files or you create the package files yourself (see below).
+   Useful if pip and python doesn't have internet access
+   due to firewall settings. If the package files are in
+   `pip_package_demo\dist\"`, you can install it with
+
+   ```text
+   (pip_demo) PS C:\Users\daniel\source\repos\pip_package_demo> pip install .\dist\pip_package_demo-1.0.9-py3-none-any.whl 
+   Processing  c:\users\daniel\source\repos\pip_package_demo\dist\pip_package_demo-1.0.9-py3-none-any.whl
+   Collecting numpy>=1.19.1
+   Using cached numpy-1.20.3-cp39-cp39-win_amd64.whl (13.7 MB)
+   Installing collected packages: numpy, pip-package-demo
+   Successfully installed numpy-1.20.3 pip-package-demo-1.0.9
+   (pip_demo) PS C:\Users\daniel\source\repos\pip_package_demo>
+   ```
+
+3. **using pip and a remote repository**.
+   The aim of this package is to be able to install this package with pip.
+   This package is (was) available on [test.pypi.org](https://test.pypi.org/project/pip-package-demo/),
+   and it is (was) possible to install it with
+   `pip install -i https://test.pypi.org/simple/ pip-package-demo`
 
 ### Dependencies
 
 The packages has 1 dependency, numpy,
-which is installed together with this package automatically by pip.
+which is installed together with this package automatically by pip if installed
+locally or from a repository which has numpy.
+Since [test.pypi.org](https://test.pypi.org/project/pip-package-demo/) is a
+testing repo only, numpy is not available and you need to satisfy this
+requirement by manually installing it.
+Once the package is deployed to a repo where numpy is also available,
+the package together with its dependencies will be possible to get installed.
+
+### development
 
 To develop this package, one needs linter, testing, documenting,
-and packaging tools. The tools I used can be installed
+and packaging tools. The tools I used can be installed:
+`pip install -r requirements.txt`
 
-## Create the package
+## Distribute the package
 
 The purpose of this repo is to show how to create the package
-that can be installed in the way noted above. TODO
+that can be installed in the way noted above.
+This package uses namespace packages,
+and settings regarded this are noted with comments in the source code.
+
+### Create the package distribution files
+
+To create the package distribution files, issue
+
+```text
+(pip_demo) PS C:\Users\daniel\source\repos\pip_package_demo> python -m build
+```
+
+This command produces a lot of output onto the terminal and creates the files
+
+```text
+├───dist
+│       pip_package_demo-1.0.10-py3-none-any.whl
+│       pip_package_demo-1.0.10.tar.gz
+```
+
+The version number reflects the value of `__version__` within the python file.
+Take a look into the `.gz` file where you can see what is included in the
+package. The `whl` file is binary.
+
+### upload the package distribution files
+
+You need the twine tool to upload your package and also need an account on the repository page (at least, on pypi.org or test.pypi.org). After that, you can upload your package with
+
+```text
+(pip_demo) PS C:\Users\daniel\source\repos\pip_package_demo> twine upload --repository testpypi dist/*
+Uploading distributions to https://test.pypi.org/legacy/
+Enter your username: tuzesdaniel
+Enter your password: 
+Uploading pip_package_demo-1.0.10-py3-none-any.whl
+100%|██████████████████████████████████████████████████████████████| 19.0k/19.0k [00:01<00:00, 9.73kB/s] 
+Uploading pip_package_demo-1.0.10.tar.gz
+100%|██████████████████████████████████████████████████████████████| 19.3k/19.3k [00:01<00:00, 14.9kB/s] 
+
+View at:
+https://test.pypi.org/project/pip-package-demo/1.0.10/
+(pip_demo) PS C:\Users\daniel\source\repos\pip_package_demo>
+```
+
+Now the package is (was) available at [test.pypi.org](https://test.pypi.org/project/pip-package-demo).
+
+### Create new versions
+
+You cannot make any modification to an already uploaded version, you need to create a new one.
+
+1. Modify the version number (defined in `setup.cfg`, and in this case, the setup reads this value from `src\daniels_package\daniels_module.py`), follow the rules of the [naming conventions](https://semver.org/#summary)
+2. Create a new package with the same command `python -m build`
+3. and upload only the new files, e.g. by deleting all but the newest 2 files from the `dist` folder
+
+If you really want to overwrite a version, you need to delete the project from the repository and recreate it again.
 
 ## Run the test
 
@@ -174,5 +265,5 @@ To create documentation for a project, one needs to prepare the followings:
 - Add further documentations, e.g. how to install the package,
   who created it, where to get help, etc.
 
-The documentation is distributed independently of the source code, and hosted
+The documentation is distributed independently of the source code, and can hosted
 on a fancy site.
