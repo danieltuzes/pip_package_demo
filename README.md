@@ -59,9 +59,9 @@ pip_package_demo
 
 | folder name        | description                                 | contained in the package |
 | ------------------ | ------------------------------------------- | ------------------------ |
-| `LICENSE`          | license according to your needs or rights   | no                       |
-| `pyproject.toml`   | information about the packaging tool        | no                       |
-| `README.md`        | for the repository welcome screen           | yes                      |
+| `LICENSE`          | license according to your needs or rights   | yes                      |
+| `pyproject.toml`   | information about the packaging tool        | yes                      |
+| `README.md`        | for the repository welcome screen           | yes (in PKG-INFO)        |
 | `requirements.txt` | dependencies for development                | no                       |
 | `setup.cfg`        | information about the package + settings *3 | yes                      |
 | `.git`             | for git source control                      | no                       |
@@ -71,7 +71,7 @@ pip_package_demo
 | `doc/source`       | additional sphinx source code in rst        | no                       |
 | `htmlcov` *2       | coverage report in html                     | no                       |
 | `src`              | python source code of the package           | yes                      |
-| `tests`            | container of the package tests              | yes *1                   |
+| `tests`            | container of the package tests              | no *1                    |
 
 *1: depends on the `package_data` and `data_files` settings of `setup.cfg`
 

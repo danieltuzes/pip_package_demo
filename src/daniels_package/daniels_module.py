@@ -6,7 +6,7 @@ Tests and documentation are available.
 import sys
 import numpy
 
-__version__ = "1.0.12"  # the version info for the package used by setup.cfg
+__version__ = "1.0.13"  # the version info for the package used by setup.cfg
 
 
 def my_func(my_text: str = "", my_arr: numpy.ndarray = None) -> int:
