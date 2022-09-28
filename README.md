@@ -117,7 +117,7 @@ You can install
    The aim of this package is to be able to install this package with pip.
    This package is (was) available on [test.pypi.org](https://test.pypi.org/project/pip-package-demo/),
    and it is (was) possible to install it with
-   `pip install -i https://test.pypi.org/simple/ pip-package-demo`
+   `pip install -i https://test.pypi.org/simple/pip-package-demo`
 
 ### Dependencies
 
@@ -134,7 +134,7 @@ the package together with its dependencies will be possible to get installed.
 
 To develop this package, one needs linter, testing, documenting,
 and packaging tools. The tools I used can be installed:
-`pip install -r requirements.txt`
+`pip install -r dev_reqs.txt`
 
 ## Distribute the package
 
@@ -188,7 +188,7 @@ Now the package is (was) available at [test.pypi.org](https://test.pypi.org/proj
 
 You cannot make any modification to an already uploaded version, you need to create a new one.
 
-1. Modify the version number (defined in `setup.cfg`, and in this case, the setup reads this value from `src\daniels_package\daniels_module.py`), follow the rules of the [naming conventions](https://semver.org/#summary)
+1. Modify the version number (defined in `setup.cfg`, and in this case, the setup reads this value from `pmdemo/my_mod.py`), follow the rules of the [naming conventions](https://semver.org/#summary)
 2. Create a new package with the same command `python -m build`
 3. and upload only the new files, e.g. by deleting all but the newest 2 files from the `dist` folder
 
@@ -207,7 +207,7 @@ rootdir: C:\Users\username\source\repos\pip_package_demo
 plugins: pylama-7.7.1, cov-2.12.0
 collected 1 item
 
-test\test_daniels_module.py .                                            [100%] 
+test\test_my_module.py .                                            [100%] 
 
 ============================== 1 passed in 0.20s ============================== 
 (pip_demo) PS C:\Users\username\source\repos\pip_package_demo>
@@ -225,7 +225,7 @@ rootdir: C:\Users\username\source\repos\pip_package_demo
 plugins: pylama-7.7.1, cov-2.12.0
 collected 1 item
 
-test\test_daniels_module.py .                                                                            [100%] 
+test\test_my_module.py .                                                                            [100%] 
 
 ----------- coverage: platform win32, python 3.9.5-final-0 -----------
 Coverage HTML written to dir htmlcov
@@ -245,14 +245,14 @@ To create pretty formatted documentation, one needs to generate by
 calling the make from the doc folder. On Windows,
 
 1. Use your new environment, where you have installed all the requirements
-   found in [`requirements.txt`](requirements.txt)
+   found in [`dev_reqs.txt`](requirements.txt)
 2. issue `make html` in the `doc` folder to generate the html documentation.
 
 To create documentation for a project, one needs to prepare the followings:
 
 - create docstrings in the python files of the package.
   In this case, the only module in the package is
-  [`daniels_module.py`](src/daniels_package/daniels_module.py),
+  [`my_mod.py`](pmdemo/my_mod.py),
   so the docstring are in this file.
 - [create settings](https://www.sphinx-doc.org/en/master/usage/quickstart.html#setting-up-the-documentation-sources) in the `doc` folder. The settings
   in this example are stored in the [`conf.py`](doc/source/conf.py),
