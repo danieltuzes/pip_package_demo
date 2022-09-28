@@ -1,6 +1,6 @@
-# contains everything that can be needed for development
-
-numpy  # the only external package used for the demo
+# this too can be contained in setup.cfg
+# and added as dev requirements
+# and installed only when needed
 
 pytest  # python testing
 pytest-cov  # test coverage check

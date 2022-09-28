@@ -22,7 +22,8 @@ is used now.
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
-from daniels_package import daniels_module  # pylint: disable=unused-import
+# my_mod is already in the sys.path
+# import my_mod  # pylint: disable=unused-import
 
 # -- Project information -----------------------------------------------------
 

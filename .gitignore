@@ -1,0 +1,5 @@
+build/*
+.vscode
+doc/build/*
+*egg-info/*
+*.pyc

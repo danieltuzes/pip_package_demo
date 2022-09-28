@@ -3,33 +3,31 @@
 This repo shows a minimal example how to create python package with tests,
 documentation and packaging settings.
 
-- [pip package demo](#pip-package-demo)
-  - [Files and folders](#files-and-folders)
-    - [Where's the `__init__.py`?](#wheres-the-__init__py)
-  - [Installation](#installation)
-    - [Install the package](#install-the-package)
-    - [Dependencies](#dependencies)
-    - [development](#development)
-  - [Distribute the package](#distribute-the-package)
-    - [Create the package distribution files](#create-the-package-distribution-files)
-    - [upload the package distribution files](#upload-the-package-distribution-files)
-    - [Create new versions](#create-new-versions)
-  - [Run the test](#run-the-test)
-    - [coverage](#coverage)
-  - [Documentation](#documentation)
+- [Files and folders](#files-and-folders)
+- [Installation](#installation)
+  - [Install the package](#install-the-package)
+  - [Dependencies](#dependencies)
+  - [development](#development)
+- [Distribute the package](#distribute-the-package)
+  - [Create the package distribution files](#create-the-package-distribution-files)
+  - [upload the package distribution files](#upload-the-package-distribution-files)
+  - [Create new versions](#create-new-versions)
+- [Run the test](#run-the-test)
+  - [coverage](#coverage)
+- [Documentation](#documentation)
 
 ## Files and folders
 
-The following files and folders are contained within this repo:
+The following files and folders are contained within this folder (or will be created during setup or tests):
 
 ```text
 pip_package_demo
 │
 │   LICENSE
-│   pyproject.toml
 │   README.md
-│   requirements.txt
+│   dev_reqs.txt
 │   setup.cfg
+│   setup.py
 │ 
 ├───dist
 │
@@ -49,41 +47,38 @@ pip_package_demo
 ├───htmlcov
 │       index.html
 │   
-├───src
-│   └───daniels_package
-│           daniels_module.py
+├───pmdemo
+│       __init__.py
+│       __main__.py
+│       my_mod.py
 │
 └───tests
-        test_daniels_module.py
+        test_my_module.py
 ```
 
-| folder name        | description                                 | contained in the package |
-| ------------------ | ------------------------------------------- | ------------------------ |
-| `LICENSE`          | license according to your needs or rights   | yes                      |
-| `pyproject.toml`   | information about the packaging tool        | yes                      |
-| `README.md`        | for the repository welcome screen           | yes (in PKG-INFO)        |
-| `requirements.txt` | dependencies for development                | no                       |
-| `setup.cfg`        | information about the package + settings *3 | yes                      |
-| `.git`             | for git source control                      | no                       |
-| `dist/` *2         | package distribution files                  | no                       |
-| `doc/` files       | created by sphinx to build docs             | no *1                    |
-| `doc/output` *2    | sphinx output products (e.g. html, pdf)     | no                       |
-| `doc/source`       | additional sphinx source code in rst        | no                       |
-| `htmlcov` *2       | coverage report in html                     | no                       |
-| `src`              | python source code of the package           | yes                      |
-| `tests`            | container of the package tests              | no *1                    |
+| folder name     | description                                 | contained in the distributed package |
+| --------------- | ------------------------------------------- | ------------------------------------ |
+| `LICENSE`       | license according to your needs or rights   | yes                                  |
+| `README.md`     | for the repository welcome screen           | yes (in PKG-INFO)                    |
+| `dev_reqs.txt`  | list of dependencies for development        | no                                   |
+| `setup.cfg`     | information about the package + settings *3 | yes                                  |
+| `setup.py`      | needed for editable install                 | yes                                  |
+| `.git`          | for git source control                      | no                                   |
+| `dist/` *2      | package distribution files                  | no                                   |
+| `doc/` files    | created by sphinx to build docs             | no *1                                |
+| `doc/output` *2 | sphinx output products (e.g. html, pdf)     | no *1                                |
+| `doc/source`    | additional sphinx source code in rst        | no *1                                |
+| `htmlcov` *2    | coverage report in html                     | no                                   |
+| `src`           | python source code of the package           | yes                                  |
+| `tests`         | container of the package tests              | no *1                                |
 
-*1: depends on the `package_data` and `data_files` settings of `setup.cfg`
+*1: depends on the `package_data` and `data_files` settings of `setup.cfg`,
+it may be a good idea to include these too
 
-*2: doesn't contained in the repo,
+*2: not included in the repo,
 but will be created once documentation, pytest coverage is created.
 
-*3: it can contain linter (pylint, pylama), testing (pytest, unittest)
-and documentation (sphinx) settings.
-
-### Where's the `__init__.py`?
-
-There is none, because there was no need for that. Namespace package is used here.
+*3: linter or other settings
 
 ## Installation
 
@@ -100,7 +95,8 @@ You can install
    issue `pip install -e .` This will place a link
    to your python `site-packages` folder which will tell to look
    for the library's content not directly in the `site-packages`,
-   but where you cloned the repo.
+   but where you cloned the repo. You need to manually add the git_subm_demo
+   package.
 2. **from a package distribution you already have locally**.
    This can happen if you download the package distribution files, somebody sent you the files or you create the package files yourself (see below).
    Useful if pip and python doesn't have internet access
