@@ -1,10 +1,3 @@
-# this too could be contained in setup.cfg
-# and added as dev requirements
-# and installed only when needed
-# but installing it with pip separately
-# gives the flexibility to add editable
-# dependencies to the repo
-
 pytest  # python testing
 pytest-cov  # test coverage check
 
