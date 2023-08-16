@@ -12,5 +12,6 @@ pylama  # python linter group
 build  # create packages
 twine  # check packages
 
+-e ./git_subm_demo
 -e .
--r ./git_subm_demo/requirements.txt
+
