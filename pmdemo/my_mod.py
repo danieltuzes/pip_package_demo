@@ -29,6 +29,9 @@ def my_func(my_text: str = "", my_arr: numpy.ndarray = None) -> int:
     print(f"sys.argv = {sys.argv}")
     print(f"sys.path = {sys.path}")
     print(f"Function str input = {my_text}")
+    with open("mydata.txt", encoding="utf-8") as ifile:
+        for line in ifile:
+            print(line)
     if my_arr is not None:
         arr_sum = numpy.sum(my_arr)
         print(f"Sum: {arr_sum}")

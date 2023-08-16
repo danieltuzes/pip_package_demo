@@ -28,6 +28,7 @@ pip_package_demo
 │   dev_reqs.txt
 │   setup.cfg
 │   setup.py
+│   out_data.jpg
 │ 
 ├───dist
 │
@@ -43,6 +44,7 @@ pip_package_demo
 │           installation.rst
 │           module_doc.rst
 │           release_notes.rst
+│           in_data.jpg
 │
 ├───htmlcov
 │       index.html
@@ -140,8 +142,28 @@ and packaging tools. The tools I used can be installed:
 
 The purpose of this repo is to show how to create the package
 that can be installed in the way noted above.
-This package uses namespace packages,
-and settings regarded this are noted with comments in the source code.
+
+Create binary and source ditributions with the command `python setup.py bdist_wheel sdist`
+Whether the out_data.jpg and in_data.jpg will be contained in the package, depends on the followings ([setuptools](https://setuptools.pypa.io/en/latest/userguide/datafiles.html)):
+
+| technique                         | in_data  and out_data | installed                          |
+| --------------------------------- | --------------------- | ---------------------------------- |
+| options `include_package_data` *1 | exclude               | na                                 |
+| options.package_data *2           | included              | into site-package, as of source *3 |
+| options.data_files                | included              | .conda/envs/envname/pmdemo *4      |
+
+*1: the package files must be defined as part of the package either in a manifest file or in an scm, and a plugin for that scm for buildutils. If there are no defined package data files, nothing will be included.
+
+*2: another way of defining package data, apart from the 2 options in point 1. Then point 1 setting has no effect. Can defined as
+
+```cfg
+pmdemo =
+    in_data.jpg
+    ../out_data.jpg
+```
+
+*3: as a result, out_data ends up in site-packages
+*4: The folder `.conda/envs/envname` can be obtained by resoloving `sys.exec_prefix`
 
 ### Create the package distribution files
 
