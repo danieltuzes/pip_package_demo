@@ -1,0 +1,1 @@
+print("Minilib imported successfully.")
