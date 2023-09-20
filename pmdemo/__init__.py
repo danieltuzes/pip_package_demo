@@ -1,5 +1,6 @@
 """Import directly the modules needed by def"""
 
-from pmdemo.my_mod import *
+from . import utils
+from . import my_mod
 
-print("__name__:", __name__)
+__version__ = "3.0.0"

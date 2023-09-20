@@ -7,7 +7,6 @@ documentation and packaging settings.
 - [Installation](#installation)
   - [Install the package](#install-the-package)
   - [Dependencies](#dependencies)
-  - [development](#development)
 - [Distribute the package](#distribute-the-package)
   - [Create the package distribution files](#create-the-package-distribution-files)
   - [upload the package distribution files](#upload-the-package-distribution-files)
@@ -15,6 +14,7 @@ documentation and packaging settings.
 - [Run the test](#run-the-test)
   - [coverage](#coverage)
 - [Documentation](#documentation)
+- [program inputs and outputs](#program-inputs-and-outputs)
 
 ## Files and folders
 
@@ -25,7 +25,7 @@ pip_package_demo
 │
 │   LICENSE
 │   README.md
-│   dev_reqs.txt
+│   requirements.txt
 │   setup.cfg
 │   setup.py
 │   out_data.jpg
@@ -53,34 +53,30 @@ pip_package_demo
 │       __init__.py
 │       __main__.py
 │       my_mod.py
+│       utils.py
 │
 └───tests
         test_my_module.py
 ```
 
-| folder name     | description                                 | contained in the distributed package |
-| --------------- | ------------------------------------------- | ------------------------------------ |
-| `LICENSE`       | license according to your needs or rights   | yes                                  |
-| `README.md`     | for the repository welcome screen           | yes (in PKG-INFO)                    |
-| `dev_reqs.txt`  | list of dependencies for development        | no                                   |
-| `setup.cfg`     | information about the package + settings *3 | yes                                  |
-| `setup.py`      | needed for editable install                 | yes                                  |
-| `.git`          | for git source control                      | no                                   |
-| `dist/` *2      | package distribution files                  | no                                   |
-| `doc/` files    | created by sphinx to build docs             | no *1                                |
-| `doc/output` *2 | sphinx output products (e.g. html, pdf)     | no *1                                |
-| `doc/source`    | additional sphinx source code in rst        | no *1                                |
-| `htmlcov` *2    | coverage report in html                     | no                                   |
-| `src`           | python source code of the package           | yes                                  |
-| `tests`         | container of the package tests              | no *1                                |
+| folder name        | description                               | contained in the distributed package |
+| ------------------ | ----------------------------------------- | ------------------------------------ |
+| `LICENSE`          | license according to your needs or rights | yes                                  |
+| `README.md`        | for the repository welcome screen         | yes (in PKG-INFO)                    |
+| `requirements.txt` | list of dependencies for development      | no                                   |
+| `setup.cfg`        | information about the package + settings  | yes                                  |
+| `setup.py`         | needed for editable install               | yes                                  |
+| `.git`             | for git source control                    | no                                   |
+| `dist/` *1         | package distribution files                | no                                   |
+| `doc/` files       | created by sphinx to build docs           | no                                   |
+| `doc/output` *1    | sphinx output products (e.g. html, pdf)   | no                                   |
+| `doc/source`       | additional sphinx source code in rst      | no                                   |
+| `htmlcov` *1       | coverage report in html                   | no                                   |
+| `src`              | python source code of the package         | yes                                  |
+| `tests`            | container of the package tests            | no                                   |
 
-*1: depends on the `package_data` and `data_files` settings of `setup.cfg`,
-it may be a good idea to include these too
-
-*2: not included in the repo,
+*1: not included in the repo,
 but will be created once documentation, pytest coverage is created.
-
-*3: linter or other settings
 
 ## Installation
 
@@ -94,12 +90,16 @@ activate a new environment.
 You can install
 
 1. **from the source code, locally, for development**. In the root,
-   issue `pip install -e .` This will place a link
-   to your python `site-packages` folder which will tell to look
-   for the library's content not directly in the `site-packages`,
-   but where you cloned the repo. You need to manually add the git_subm_demo
-   package.
-2. **from a package distribution you already have locally**.
+   issue `pip install -r requirements.txt` This refers to the same folder
+   as where the code is, therefore editing the code doesn't require new installation.
+   Installs the required packages from the setup.cfg, as well as from the requirements.
+   The requirements.txt contains packages that are needed for development only.
+   Good for development purposes.
+2. **from the source code, locally, for production**. In the root, issue
+   `pip install .` This install the necessary packages from the setup.cfg only.
+   Creates a copy of the code in the site-package directory.
+   This is a shortcut and equivalent in results to 3 and 4.
+3. **from a package distribution you already have locally**.
    This can happen if you download the package distribution files, somebody sent you the files or you create the package files yourself (see below).
    Useful if pip and python doesn't have internet access
    due to firewall settings. If the package files are in
@@ -115,7 +115,7 @@ You can install
    (pip_demo) PS C:\Users\daniel\source\repos\pip_package_demo>
    ```
 
-3. **using pip and a remote repository**.
+4. **using pip and a remote repository**.
    The aim of this package is to be able to install this package with pip.
    This package is (was) available on [test.pypi.org](https://test.pypi.org/project/pip-package-demo/),
    and it is (was) possible to install it with
@@ -123,20 +123,15 @@ You can install
 
 ### Dependencies
 
-The packages has 1 dependency, numpy,
-which is installed together with this package automatically by pip if installed
-locally or from a repository which has numpy.
+The packages has 1 dependency, pandas,
+which is installed together with this package automatically.
+
 Since [test.pypi.org](https://test.pypi.org/project/pip-package-demo/) is a
-testing repo only, numpy is not available and you need to satisfy this
-requirement by manually installing it.
-Once the package is deployed to a repo where numpy is also available,
+testing repo only, pandas is not available and you need to satisfy this
+requirement by manually installing it, if decide to install the package from a distribution channel.
+
+Once the package is deployed to a repo where pandas is also available,
 the package together with its dependencies will be possible to get installed.
-
-### development
-
-To develop this package, one needs linter, testing, documenting,
-and packaging tools. The tools I used can be installed:
-`pip install -r dev_reqs.txt`
 
 ## Distribute the package
 
@@ -185,6 +180,18 @@ The version number reflects the value of `__version__` within the python file.
 Take a look into the `.gz` file where you can see what is included in the
 package. The `whl` file is binary.
 
+You can also create source or binary distribution package with the commands
+
+```text
+(pip_demo) PS C:\Users\daniel\source\repos\pip_package_demo> python setup sdist
+```
+
+and
+
+```text
+(pip_demo) PS C:\Users\daniel\source\repos\pip_package_demo> python setup bdist_wheel
+```
+
 ### upload the package distribution files
 
 You need the twine tool to upload your package and also need an account on the repository page (at least, on pypi.org or test.pypi.org). After that, you can upload your package with
@@ -210,8 +217,9 @@ Now the package is (was) available at [test.pypi.org](https://test.pypi.org/proj
 
 You cannot make any modification to an already uploaded version, you need to create a new one.
 
-1. Modify the version number (defined in `setup.cfg`, and in this case, the setup reads this value from `pmdemo/my_mod.py`), follow the rules of the [naming conventions](https://semver.org/#summary)
-2. Create a new package with the same command `python -m build`
+1. Modify the version number (defined implicitly in `setup.cfg`),
+   follow the rules of the [naming conventions](https://semver.org/#summary)
+2. Create a new package with the same command e.g. `python -m build`
 3. and upload only the new files, e.g. by deleting all but the newest 2 files from the `dist` folder
 
 If you really want to overwrite a version, you need to delete the project from the repository and recreate it again.
@@ -285,3 +293,19 @@ To create documentation for a project, one needs to prepare the followings:
 
 The documentation is distributed independently of the source code, and can hosted
 on a fancy site.
+
+## program inputs and outputs
+
+For inputs, it takes command line arguments, a so-called masterconfig, contianing all the input and output files. The masterconfig has an inputs section, defining:
+
+1. a data file (csv, database, big)
+2. a config file (cfg, text, small)
+
+As outputs, it
+
+1. writes to the outputs
+   1. some version information to the stdout,
+   2. log messages to stderr. Note that even info or debug levels too go to stderr.
+2. Creates output files at the locations where the masterconfig said so
+   1. a log file storing the log messages
+   2. a result file of this simple model

@@ -4,37 +4,26 @@ Tests and documentation are available. This text is in the file
 `my_mod.py`.
 """
 
-import sys
-import numpy
-
-__version__ = "2.0.0"  # the version info for the package used by setup.cfg
+import pandas as pd
 
 
-def my_func(my_text: str = "", my_arr: numpy.ndarray = None) -> int:
-    """Print out some debug info and return the sum of the array or 0 if none.
+def my_func(table_path: str, factor: float, ofile: str) -> None:
+    """Process the input file with factor and write results.
 
     Parameters
     ----------
-    my_text : str, optional
-        A text that is printed out, by default ""
-    my_arr : numpy.ndarray, optional
-        The sum of the array is printed out if set, by default None
+    table_path : str
+        The path to the csv file storing columns A and B.
+    factor : float
+        A parameter read in from a config file.
+    ofile : str
+        The path to the result file.
 
     Returns
     -------
-    int
-        The sum of my_arr if set, 0 otherwise.
-
+    pd.DataFrame
+        The processed file the result.
     """
-    print(f"sys.argv = {sys.argv}")
-    print(f"sys.path = {sys.path}")
-    print(f"Function str input = {my_text}")
-    with open("mydata.txt", encoding="utf-8") as ifile:
-        for line in ifile:
-            print(line)
-    if my_arr is not None:
-        arr_sum = numpy.sum(my_arr)
-        print(f"Sum: {arr_sum}")
-        return arr_sum
-
-    return 0
+    data = pd.read_csv(table_path, dtype=float)
+    data["result"] = data["A"]+factor*data["B"]
+    data.to_csv(ofile, index=False)
