@@ -4,3 +4,4 @@ doc/build/*
 *egg-info/*
 *.pyc
 dist/*
+output/
