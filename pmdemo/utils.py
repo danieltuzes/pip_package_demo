@@ -61,7 +61,8 @@ def set_log(fname: str):
                         handlers=[
                             logging.FileHandler(fname),
                             logging.StreamHandler()
-                        ])
+                        ],
+                        force=True)
 
     def _excepthook(type_, value, traceback):
         """Capturing exceptions."""
