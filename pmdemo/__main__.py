@@ -22,7 +22,7 @@ def main():
     pmdemo.my_mod.my_func(conf["inputs"]["tables"],
                           factor,
                           conf["outputs"]["res"])
-    sleep = int(conf.get("settings", "sleep", fallback="20"))
+    sleep = int(conf.get("top", "sleep", fallback="20"))
 
     for i in range(sleep):
         logging.info("asleep", i)
