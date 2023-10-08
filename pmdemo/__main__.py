@@ -3,6 +3,7 @@ or by `python -m pmdemo` for anywhere, if installed."""
 
 import logging
 import sys
+import time
 
 import pmdemo
 import my_helper
@@ -21,6 +22,12 @@ def main():
     pmdemo.my_mod.my_func(conf["inputs"]["tables"],
                           factor,
                           conf["outputs"]["res"])
+    sleep = int(conf.get("settings", "sleep", fallback="20"))
+
+    for i in range(sleep):
+        logging.info("asleep", i)
+        time.sleep(1)
+
     return 0
 
 

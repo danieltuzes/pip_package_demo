@@ -296,7 +296,7 @@ on a fancy site.
 
 ## program inputs and outputs
 
-For inputs, it takes command line arguments, a so-called masterconfig, contianing all the input and output files. The masterconfig has an inputs section, defining:
+For inputs, it takes a single command line argument, a so-called masterconfig, contianing all the input and output files. Call `python -m pmdemo -h` for more details. The masterconfig has an inputs section, defining:
 
 1. a data file (csv, database, big)
 2. a config file (cfg, text, small)
