@@ -5,3 +5,4 @@ doc/build/*
 *.pyc
 dist/*
 output/
+pmdemo.zip

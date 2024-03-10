@@ -3,18 +3,20 @@
 This repo shows a minimal example how to create python package with tests,
 documentation and packaging settings.
 
-- [Files and folders](#files-and-folders)
-- [Installation](#installation)
-  - [Install the package](#install-the-package)
-  - [Dependencies](#dependencies)
-- [Distribute the package](#distribute-the-package)
-  - [Create the package distribution files](#create-the-package-distribution-files)
-  - [upload the package distribution files](#upload-the-package-distribution-files)
-  - [Create new versions](#create-new-versions)
-- [Run the test](#run-the-test)
-  - [coverage](#coverage)
-- [Documentation](#documentation)
-- [program inputs and outputs](#program-inputs-and-outputs)
+- [pip package demo](#pip-package-demo)
+  - [Files and folders](#files-and-folders)
+  - [Installation](#installation)
+    - [Install the package](#install-the-package)
+    - [Dependencies](#dependencies)
+  - [Distribute the package](#distribute-the-package)
+    - [MANIFEST.in](#manifestin)
+    - [Create the package distribution files](#create-the-package-distribution-files)
+    - [upload the package distribution files](#upload-the-package-distribution-files)
+    - [Create new versions](#create-new-versions)
+  - [Run the test](#run-the-test)
+    - [coverage](#coverage)
+  - [Documentation](#documentation)
+  - [program inputs and outputs](#program-inputs-and-outputs)
 
 ## Files and folders
 
@@ -24,6 +26,7 @@ The following files and folders are contained within this folder (or will be cre
 pip_package_demo
 │
 │   LICENSE
+│   MANIFEST.in
 │   README.md
 │   requirements.txt
 │   setup.cfg
@@ -59,9 +62,10 @@ pip_package_demo
         test_my_module.py
 ```
 
-| folder name        | description                               | contained in the distributed package |
+| file name          | description                               | contained in the distributed package |
 | ------------------ | ----------------------------------------- | ------------------------------------ |
 | `LICENSE`          | license according to your needs or rights | yes                                  |
+| `MANIFEST.in`      | tells extra files to put into the package | yes                                  |
 | `README.md`        | for the repository welcome screen         | yes (in PKG-INFO)                    |
 | `requirements.txt` | list of dependencies for development      | no                                   |
 | `setup.cfg`        | information about the package + settings  | yes                                  |
@@ -141,11 +145,11 @@ that can be installed in the way noted above.
 Create binary and source ditributions with the command `python setup.py bdist_wheel sdist`
 Whether the out_data.jpg and in_data.jpg will be contained in the package, depends on the followings ([setuptools](https://setuptools.pypa.io/en/latest/userguide/datafiles.html)):
 
-| technique                         | in_data  and out_data | installed                          |
-| --------------------------------- | --------------------- | ---------------------------------- |
-| options `include_package_data` *1 | exclude               | na                                 |
-| options.package_data *2           | included              | into site-package, as of source *3 |
-| options.data_files                | included              | .conda/envs/envname/pmdemo *4      |
+| technique                         | in_data and out_data | installed                          |
+| --------------------------------- | -------------------- | ---------------------------------- |
+| options `include_package_data` *1 | exclude              | na                                 |
+| options.package_data *2           | included             | into site-package, as of source *3 |
+| options.data_files                | included             | .conda/envs/envname/pmdemo *4      |
 
 *1: the package files must be defined as part of the package either in a manifest file or in an scm, and a plugin for that scm for buildutils. If there are no defined package data files, nothing will be included.
 
@@ -159,6 +163,13 @@ pmdemo =
 
 *3: as a result, out_data ends up in site-packages
 *4: The folder `.conda/envs/envname` can be obtained by resoloving `sys.exec_prefix`
+
+### MANIFEST.in
+
+This was files can be also put into the package but for sdist only. Even for sdist, when installing,
+these files are not copied to the site-package or environment's data folder.
+To install these files too,
+you need to put the data files to be installed into the source folder `pmdemo` and edit `setup.py` to include package data.
 
 ### Create the package distribution files
 
