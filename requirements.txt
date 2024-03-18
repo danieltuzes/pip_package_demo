@@ -2,7 +2,7 @@ pytest  # python testing
 pytest-cov  # test coverage check
 
 sphinx  # documentation generator
-snooty-lextudio  # rst server
+esbonio  # rst server
 rstcheck  # rst linter
 
 autopep8  # autoformat
