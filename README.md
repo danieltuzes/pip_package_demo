@@ -17,6 +17,7 @@ documentation and packaging settings.
     - [coverage](#coverage)
   - [Documentation](#documentation)
   - [program inputs and outputs](#program-inputs-and-outputs)
+  - [masterinput](#masterinput)
 
 ## Files and folders
 
@@ -145,11 +146,11 @@ that can be installed in the way noted above.
 Create binary and source ditributions with the command `python setup.py bdist_wheel sdist`
 Whether the out_data.jpg and in_data.jpg will be contained in the package, depends on the followings ([setuptools](https://setuptools.pypa.io/en/latest/userguide/datafiles.html)):
 
-| technique                         | in_data and out_data | installed                          |
-| --------------------------------- | -------------------- | ---------------------------------- |
-| options `include_package_data` *1 | exclude              | na                                 |
-| options.package_data *2           | included             | into site-package, as of source *3 |
-| options.data_files                | included             | .conda/envs/envname/pmdemo *4      |
+| technique                          | in_data and out_data | installed                          |
+| ---------------------------------- | -------------------- | ---------------------------------- |
+| options `include_package_data` \*1 | exclude              | na                                 |
+| options.package_data *2            | included             | into site-package, as of source *3 |
+| options.data_files                 | included             | .conda/envs/envname/pmdemo *4      |
 
 *1: the package files must be defined as part of the package either in a manifest file or in an scm, and a plugin for that scm for buildutils. If there are no defined package data files, nothing will be included.
 
@@ -320,3 +321,8 @@ As outputs, it
 2. Creates output files at the locations where the masterconfig said so
    1. a log file storing the log messages
    2. a result file of this simple model
+
+## masterinput
+
+This serves as an example how to create a masterinput config file for the service [GEP Host](https://github.com/danieltuzes/gep_host_service).
+Compress the files in the masterinput folder with `MasterInput.cfg` in the root.
